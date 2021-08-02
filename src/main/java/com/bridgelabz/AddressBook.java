@@ -13,19 +13,21 @@ public class AddressBook {
         boolean options = true;
         while (options) {
             AddressBook addressBook=new AddressBook();
-            System.out.println("Enter \n 1)To Add contacts \n 2) To edit contacts\n 3) To Exit");
+            System.out.println("Enter \n 1)To Add contacts \n 2) To edit contacts\n 3)To Delete Contacts 4) To Exit");
             int option = sc.nextInt();
             switch (option) {
-                case 1:
+                case 1://calling addContacts method
                     AddressBook.addContact();
                     break;
-                case 2:
+                case 2://calling editContacts method
                     AddressBook.editContacts();
+                    break;
+                case 3://calling deleteContacts method
+                    AddressBook.deleteContacts();
                     break;
                 default:
                     System.out.println("Invalid Option");
             }
-
         }
     }
 
@@ -92,6 +94,20 @@ public class AddressBook {
         }
         System.out.println(contactsArrayList.toString());
 
+    }
+    //creating method for deleting contacts
+    static void deleteContacts() {
+        System.out.println("Enter firstname of the user you want to delete:");
+        String firstName = sc.next();
+        for (int i = 0; i < contactsArrayList.size(); i++) {
+            Contacts c = contactsArrayList.get(i);
+            if (c.getFirstName().equals(firstName)) {
+
+                contactsArrayList.remove(c);
+
+            }
+            System.out.println(contactsArrayList);
+        }
     }
 }
 
