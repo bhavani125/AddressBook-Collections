@@ -6,16 +6,31 @@ import java.util.Scanner;
 public class AddressBook {
     //here iam using ArrayList to store
     public static ArrayList<Contacts> contactsArrayList = new ArrayList<>();
-
+    static Scanner sc = new Scanner(System.in);
     //Main method
     public static void main(String[] args) {
         System.out.println("Welcome to AddressBook System");
-        AddressBook addressBook=new AddressBook();
-        addressBook.addContact();
+        boolean options = true;
+        while (options) {
+            AddressBook addressBook=new AddressBook();
+            System.out.println("Enter \n 1)To Add contacts \n 2) To edit contacts\n 3) To Exit");
+            int option = sc.nextInt();
+            switch (option) {
+                case 1:
+                    AddressBook.addContact();
+                    break;
+                case 2:
+                    AddressBook.editContacts();
+                    break;
+                default:
+                    System.out.println("Invalid Option");
+            }
+
+        }
     }
+
     //Creating method to add Contact into AddressBook
-    public void addContact(){
-        Scanner sc = new Scanner(System.in);
+    static void addContact(){
         // creating object person for Contacts class
         Contacts person = new Contacts();
         System.out.println("Enter the firstName");
@@ -37,6 +52,47 @@ public class AddressBook {
         contactsArrayList.add(person);
         System.out.println(person);
         }
+
+    //creating method for editing contacts in previous Contacts
+    static void editContacts() {
+        System.out.println("Enter firstname of the user you want to the edit:");
+        String firstName = sc.next();
+        for (Contacts c : contactsArrayList) {
+            if (c.getFirstName().equals(firstName)) {
+                System.out.println("c");
+                System.out.println("Enter the  field which u want to edit:");
+                System.out.println(" Address");
+                System.out.println(" City ");
+                System.out.println(" State");
+                System.out.println(" Email");
+                System.out.println(" Phone Number");
+                System.out.println(" ZipCode");
+                System.out.println("Exit");
+                String field = sc.next();
+
+                if (field.equals("firstName")) {
+                    c.setFirstName(sc.next());
+                } else if (field.equals("lastName")) {
+                    c.setLastName(sc.next());
+                } else if (field.equals("Address")) {
+                    c.setAddress(sc.next());
+                } else if (field.equals("City")) {
+                    c.setCity(sc.next());
+                } else if (field.equals("State")) {
+                    c.setState(sc.next());
+                } else if (field.equals("Email")) {
+                    c.setEmailId(sc.next());
+                } else if (field.equals("Zip")) {
+                    c.setZip(sc.nextLong());
+                } else if (field.equals("phoneNumber")) {
+                    c.setPhoneNumber(sc.nextLong());
+                }
+            }
+
+        }
+        System.out.println(contactsArrayList.toString());
+
+    }
 }
 
 
