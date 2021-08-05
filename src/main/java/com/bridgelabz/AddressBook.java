@@ -2,25 +2,31 @@ package com.bridgelabz;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Scanner;
 
 public class AddressBook {
     static Scanner sc = new Scanner(System.in);
+    static ArrayList<Contacts> contactsArrayList = new ArrayList<>();
+    static HashMap<String, ArrayList<Contacts>> addressBook = new HashMap<String, ArrayList<Contacts>>();
+
     //main method
     public static void main(String[] args) {
+        //Creating Object for the AddressBook
         AddressBook addressBookObj = new AddressBook();
-         addressBookObj.CreatingAddressBooks();
+        addressBookObj.CreatingAddressBooks();
     }
+
     //Creating CreatingAddressBooks Method here
     public void CreatingAddressBooks() {
-        //here iam using ArrayList to store
         HashMap<String, ArrayList<Contacts>> addressBook = new HashMap<String, ArrayList<Contacts>>();
         boolean options = true;
+        label:
         while (options) {
             System.out.println("Enter 1) To Create new Address book\n 2) To edit address books \n 3) To view all the address books\n 4) To Exit");
             int option = sc.nextInt();
             switch (option) {
-                case 1:
+                case 1: {
                     ArrayList<Contacts> contactsArrayList = new ArrayList<>();
                     System.out.println("Enter the new addressBook name : ");
                     String addressBookName = sc.next();
@@ -32,7 +38,7 @@ public class AddressBook {
                             System.out.println("Enter 1) To Add contact in " + addressBookName + "\n 2) To Exit from " + addressBookName);
                             int choice = sc.nextInt();
                             if (choice == 1) {
-                                addContact(person, contactsArrayList);
+                                addContact();
                                 addressBook.put(addressBookName, contactsArrayList);
                                 System.out.println("Added person details in " + addressBookName + " successfully.");
                             } else {
@@ -43,39 +49,44 @@ public class AddressBook {
                     } else {
                         System.out.println(addressBookName + " address book is already present.");
                     }
+
                     break;
+                }
 
                 // editing the previous address book
-                case 2:
+                case 2: {
+                    ArrayList<Contacts> contactsArrayList = new ArrayList<>();
                     System.out.println("Enter a address book name u want to edit : ");
-                    addressBookName = sc.next();
+                    String addressBookName = sc.next();
                     try {
                         if (addressBook.containsKey(addressBookName)) {
                             contactsArrayList = addressBook.get(addressBookName);
                             boolean flag = true;
                             while (flag) {
                                 Contacts person = new Contacts();
-                                System.out.println("Enter 1) To Add contact in " + addressBookName + "\n2) To Edit Contact from " + addressBookName + "\n3) To Delete contact from " + addressBookName + "\n4) To View contact from " + addressBookName + "\n5) To Exit " + addressBookName);
+                                System.out.println("Enter 1) To Add contact in " + addressBookName + "\n2) To Edit Contact from " + addressBookName + "\n3) To Delete contact from " + addressBookName + "\n4) To Check Duplicate Contact from" + addressBookName + "\n5) To View contact from " + addressBookName + "\n6) To Exit " + addressBookName);
                                 int choice = sc.nextInt();
                                 switch (choice) {
                                     case 1:
-                                        addContact(person, contactsArrayList);
+                                        addContact();
                                         break;
                                     case 2:
-                                        editContacts(person, contactsArrayList);
-
+                                        editContacts();
                                         break;
                                     case 3:
-                                        deleteContacts(person, contactsArrayList);
-
+                                        deleteContacts();
                                         break;
                                     case 4:
+                                        duplicateCheck();
+                                        break;
+                                    case 5:
                                         viewContact(contactsArrayList);
                                         break;
                                     default:
                                         flag = false;
                                         addressBook.put(addressBookName, contactsArrayList);
                                         System.out.println("Exit ");
+
                                 }
                             }
                             // adding contact list to the dictionary (Address book)
@@ -90,7 +101,7 @@ public class AddressBook {
                     }
 
                     break;
-
+                }
                 // shows address book names
                 case 3:
                     if (!addressBook.isEmpty()) {
@@ -103,15 +114,17 @@ public class AddressBook {
                         System.out.println("Address book is empty.");
                     }
                     break;
+
                 // exit
                 default:
-                    break;
+                    break label;
             }
         }
     }
 
     //adding contacts
-    private static ArrayList<Contacts> addContact(Contacts person, ArrayList<Contacts> contactsArrayList) {
+    public void addContact() {
+        Contacts person = new Contacts();
         System.out.println("Enter the firstName");
         person.setFirstName(sc.next());
         System.out.println("Enter the lastName");
@@ -132,10 +145,11 @@ public class AddressBook {
         contactsArrayList.add(person);
         System.out.println(contactsArrayList);
 
-        return contactsArrayList;
+
     }
+
     //editing contacts
-    public static ArrayList<Contacts> editContacts( Contacts person, ArrayList < Contacts > contactsArrayList ) {
+    public void  editContacts() {
         System.out.println("Enter firstname of the user you want to the edit:");
         String firstName = sc.next();
         for (Contacts c : contactsArrayList) {
@@ -174,11 +188,11 @@ public class AddressBook {
 
         }
         System.out.println(contactsArrayList.toString());
-        return contactsArrayList;
+
     }
 
     //deleting contacts
-    private static ArrayList<Contacts> deleteContacts (Contacts person, ArrayList < Contacts > contactsArrayList) {
+    public void  deleteContacts() {
         System.out.println("Enter firstname of the user you want to delete:");
         String firstName = sc.next();
         for (int i = 0; i < contactsArrayList.size(); i++) {
@@ -189,15 +203,28 @@ public class AddressBook {
 
         }
         System.out.println(contactsArrayList);
-        return contactsArrayList;
+
     }
-    //View contacts method
-    private static void viewContact (ArrayList < Contacts > contactsArrayList) {
-        for (Contacts c : contactsArrayList) {
-            System.out.println(c);
+
+    //duplicateCheck method
+   public void duplicateCheck(){
+        System.out.println("Enter the first name");
+        String enteredName = sc.next();
+        for (int i = 0; i < contactsArrayList.size(); i++) {
+            Contacts c = contactsArrayList.get(i);
+            if (c.getFirstName().equals(enteredName)) {
+                System.out.println("This Person is Already Present");
+            } else {
+                System.out.println("You can Add this Person");
+            }
         }
 
     }
+
+    //View contacts method
+    private static void viewContact(ArrayList<Contacts> contactsArrayList) {
+        for (Contacts c : contactsArrayList) {
+            System.out.println(c);
+        }
+    }
 }
-
-

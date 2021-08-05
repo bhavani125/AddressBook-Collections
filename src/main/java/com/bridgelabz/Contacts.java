@@ -2,14 +2,14 @@ package com.bridgelabz;
 
 public class Contacts {
     //instance variables
-    private String firstName;
-    private String lastName;
-    private String address;
-    private String city;
-    private String state;
-    private String emailId;
-    private long zip;
-    private long phoneNumber;
+    String firstName;
+    String lastName;
+    String address;
+    String city;
+    String state;
+    String emailId;
+    long zip;
+    long phoneNumber;
 
     public String getFirstName() {
         return firstName;
@@ -88,4 +88,5 @@ public class Contacts {
                 ", phoneNumber=" + phoneNumber +
                 '}';
     }
+
 }
