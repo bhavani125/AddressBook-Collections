@@ -205,9 +205,8 @@ public class AddressBook {
         System.out.println(contactsArrayList);
 
     }
-
     //duplicateCheck method
-   public void duplicateCheck(){
+    public void duplicateCheck(){
         System.out.println("Enter the first name");
         String enteredName = sc.next();
         for (int i = 0; i < contactsArrayList.size(); i++) {
