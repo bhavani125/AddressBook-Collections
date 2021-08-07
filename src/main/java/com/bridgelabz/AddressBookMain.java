@@ -15,7 +15,7 @@ public class AddressBookMain {
         String addressbookName = "Default";
         addressbooks.put("Default", addressbook);
         do {
-            System.out.println("Enter 1) To Create new Address book\n 2) To edit address books \n 3) To view all the address books\n 4)Search Person By City Or State In All Address Books\n 5) To Exit");
+            System.out.println("Enter 1) To Create new Address book\n 2) To edit address books \n 3) To view all the address books\n 4)To Search Person By City Or State In All Address Books\n 5) To View Person by City or State in Current Address Book\n6) To Exit");
             choice = userInput.nextInt();
             userInput.nextLine();
             switch (choice) {
@@ -115,6 +115,17 @@ public class AddressBookMain {
                         searchPersonByCity();
                     else if (input.equalsIgnoreCase("S"))
                         searchPersonByState();
+                    else
+                        System.out.println("Invalid Input!");
+                    break;
+                }
+                case 5: {
+                    System.out.println("Enter (C) to View by City\nEnter (S) to View by State\n");
+                    String input = userInput.nextLine();
+                    if (input.equalsIgnoreCase("C"))
+                        addressbook.viewPersonByCity();
+                    else if (input.equalsIgnoreCase("S"))
+                        addressbook.viewPersonByState();
                     else
                         System.out.println("Invalid Input!");
                     break;

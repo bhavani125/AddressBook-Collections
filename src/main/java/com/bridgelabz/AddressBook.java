@@ -2,12 +2,17 @@ package com.bridgelabz;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Scanner;
 
 public class AddressBook {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Contacts> contactsArrayList = new ArrayList<>();
     static HashMap<String, ArrayList<Contacts>> addressBook = new HashMap<String, ArrayList<Contacts>>();
+
+    static String firstName,lastName,address,city,state,zipCode,phoneNumber,email;
+    static HashMap<String,Contacts> cityToPerson = new HashMap<String,Contacts>();
+    static HashMap<String,Contacts> stateToPerson = new HashMap<String,Contacts>();
 
     //adding contacts
     public void addContact() {
@@ -28,15 +33,17 @@ public class AddressBook {
         person.setZip(sc.nextLong());
         System.out.println("Enter the phoneNumber");
         person.setPhoneNumber(sc.nextLong());
-        if (duplicateCheck()){
+        if(duplicateCheck()) {
             System.out.println("This Contact Is Already Added.");
-        } else {
+        }
+        else {
             //using console
             contactsArrayList.add(person);
-            System.out.println(contactsArrayList);
+            cityToPerson.put(city, person);
+            stateToPerson.put(state, person);
+            System.out.println("Added:- "+person);
         }
     }
-
     //editing contacts
     public void  editContacts() {
         System.out.println("Enter firstname of the user you want to the edit:");
@@ -100,5 +107,35 @@ public class AddressBook {
             Contacts c = contactsArrayList.get(i);
             System.out.println(c);
         }
+    }
+    //Creating viewPersonByCity method
+    public void viewPersonByCity() {
+        Scanner userInput=new Scanner(System.in);
+        System.out.print("Enter City name :");
+        String cityName=userInput.nextLine();
+        int flag=0;
+        for(Map.Entry record : cityToPerson.entrySet()){
+            if(cityName.equalsIgnoreCase((String)record.getKey())) {
+                flag=1;
+                System.out.println(record.getValue());
+            }
+        }
+        if(flag==0)
+            System.out.println("This City does not exists!");
+    }
+    //Creating viewPersonByState method
+    public void viewPersonByState() {
+        Scanner userInput=new Scanner(System.in);
+        System.out.print("Enter State name :");
+        String stateName=userInput.nextLine();
+        int flag=0;
+        for(Map.Entry record : stateToPerson.entrySet()){
+            if(stateName.equalsIgnoreCase((String)record.getKey())) {
+                flag=1;
+                System.out.println(record.getValue());
+            }
+        }
+        if(flag==0)
+            System.out.println("This State does not exists!");
     }
 }
