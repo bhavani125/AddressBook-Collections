@@ -55,7 +55,7 @@ public class AddressBook {
             System.out.println(" State");
             System.out.println(" Email");
             System.out.println(" Phone Number");
-            System.out.println(" ZipCode");
+            System.out.println(" Zip");
             System.out.println("Exit");
             String field = sc.next();
             if (field.equals("firstName")) {
