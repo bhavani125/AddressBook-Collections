@@ -1,18 +1,16 @@
 package com.bridgelabz;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class AddressBook {
     static Scanner sc = new Scanner(System.in);
     static ArrayList<Contacts> contactsArrayList = new ArrayList<>();
     static HashMap<String, ArrayList<Contacts>> addressBook = new HashMap<String, ArrayList<Contacts>>();
 
-    static String firstName,lastName,address,city,state,zipCode,phoneNumber,email;
-    static HashMap<String,Contacts> cityToPerson = new HashMap<String,Contacts>();
-    static HashMap<String,Contacts> stateToPerson = new HashMap<String,Contacts>();
+    static String firstName, lastName, address, city, state, emailId, zip, phoneNumber;
+    static HashMap<String, Contacts> cityToPerson = new HashMap<String, Contacts>();
+    static HashMap<String, Contacts> stateToPerson = new HashMap<String, Contacts>();
 
     //adding contacts
     public void addContact() {
@@ -30,22 +28,22 @@ public class AddressBook {
         System.out.println("Enter the EmailId");
         person.setEmailId(sc.next());
         System.out.println("Enter the zip");
-        person.setZip(sc.nextLong());
+        person.setZip(sc.next());
         System.out.println("Enter the phoneNumber");
-        person.setPhoneNumber(sc.nextLong());
-        if(duplicateCheck()) {
+        person.setPhoneNumber(sc.next());
+        if (duplicateCheck()) {
             System.out.println("This Contact Is Already Added.");
-        }
-        else {
+        } else {
             //using console
             contactsArrayList.add(person);
             cityToPerson.put(city, person);
             stateToPerson.put(state, person);
-            System.out.println("Added:- "+person);
+            System.out.println("Added:- " + person);
         }
     }
+
     //editing contacts
-    public void  editContacts() {
+    public void editContacts() {
         System.out.println("Enter firstname of the user you want to the edit:");
         String firstName = sc.next();
         contactsArrayList.stream().filter(c -> c.getFirstName().equals(firstName)).forEach(c -> {
@@ -72,23 +70,24 @@ public class AddressBook {
             } else if (field.equals("Email")) {
                 c.setEmailId(sc.next());
             } else if (field.equals("Zip")) {
-                c.setZip(sc.nextLong());
+                c.setZip(sc.next());
             } else if (field.equals("phoneNumber")) {
-                c.setPhoneNumber(sc.nextLong());
+                c.setPhoneNumber(sc.next());
             }
         });
     }
 
     //deleting contacts
-    public void  deleteContacts() {
+    public void deleteContacts() {
         System.out.println("Enter firstname of the user you want to delete:");
         String firstName = sc.next();
         contactsArrayList.stream().filter(c -> c.getFirstName().equals(firstName)).forEach(c -> contactsArrayList.remove(c));
         System.out.println(contactsArrayList);
 
     }
+
     //duplicateCheck method
-    public boolean duplicateCheck(){
+    public boolean duplicateCheck() {
         System.out.println("Enter the first name to check weather name there or not");
         String enteredName = sc.next();
         for (Contacts c : contactsArrayList) {
@@ -101,6 +100,7 @@ public class AddressBook {
 
         return false;
     }
+
     //View contacts method
     public void display(ArrayList<Contacts> contactsArrayList) {
         for (int i = 0; i < contactsArrayList.size(); i++) {
@@ -108,6 +108,7 @@ public class AddressBook {
             System.out.println(c);
         }
     }
+
     //Creating viewPersonByCity method
     public void viewPersonByCity() {
         Scanner userInput=new Scanner(System.in);
@@ -137,5 +138,31 @@ public class AddressBook {
         }
         if(flag==0)
             System.out.println("This State does not exists!");
+    }
+    // Creating countByOption method to count element by option
+    public static void countByOption() {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1. Count City ");
+        System.out.println("2. Count State");
+        System.out.println("3. Back ");
+        System.out.println("Enter Your Choice : ");
+        int choice = sc.nextInt();
+        sc.nextLine();
+        switch (choice) {
+            case 1:
+                Map<String, Long> countCity = contactsArrayList.stream()
+                        .collect(Collectors.groupingBy(e -> e.getCity(), Collectors.counting()));
+                System.out.println(countCity + "\n");
+                break;
+            case 2:
+                Map<String, Long> countState = contactsArrayList.stream()
+                        .collect(Collectors.groupingBy(e -> e.getState(), Collectors.counting()));
+                System.out.println(countState + "\n");
+                break;
+            case 3:
+                return;
+            default:
+                System.out.println("Invalid Option");
+        }
     }
 }
