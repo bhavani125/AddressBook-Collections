@@ -1,6 +1,7 @@
 package com.bridgelabz;
 
 import java.util.*;
+import java.util.function.Function;
 import java.util.stream.Collectors;
 
 public class AddressBook {
@@ -111,58 +112,33 @@ public class AddressBook {
 
     //Creating viewPersonByCity method
     public void viewPersonByCity() {
-        Scanner userInput=new Scanner(System.in);
+        Scanner userInput = new Scanner(System.in);
         System.out.print("Enter City name :");
-        String cityName=userInput.nextLine();
-        int flag=0;
-        for(Map.Entry record : cityToPerson.entrySet()){
-            if(cityName.equalsIgnoreCase((String)record.getKey())) {
-                flag=1;
+        String cityName = userInput.nextLine();
+        int flag = 0;
+        for (Map.Entry record : cityToPerson.entrySet()) {
+            if (cityName.equalsIgnoreCase((String) record.getKey())) {
+                flag = 1;
                 System.out.println(record.getValue());
             }
         }
-        if(flag==0)
+        if (flag == 0)
             System.out.println("This City does not exists!");
     }
+
     //Creating viewPersonByState method
     public void viewPersonByState() {
-        Scanner userInput=new Scanner(System.in);
+        Scanner userInput = new Scanner(System.in);
         System.out.print("Enter State name :");
-        String stateName=userInput.nextLine();
-        int flag=0;
-        for(Map.Entry record : stateToPerson.entrySet()){
-            if(stateName.equalsIgnoreCase((String)record.getKey())) {
-                flag=1;
+        String stateName = userInput.nextLine();
+        int flag = 0;
+        for (Map.Entry record : stateToPerson.entrySet()) {
+            if (stateName.equalsIgnoreCase((String) record.getKey())) {
+                flag = 1;
                 System.out.println(record.getValue());
             }
         }
-        if(flag==0)
+        if (flag == 0)
             System.out.println("This State does not exists!");
-    }
-    // Creating countByOption method to count element by option
-    public static void countByOption() {
-        Scanner sc = new Scanner(System.in);
-        System.out.println("1. Count City ");
-        System.out.println("2. Count State");
-        System.out.println("3. Back ");
-        System.out.println("Enter Your Choice : ");
-        int choice = sc.nextInt();
-        sc.nextLine();
-        switch (choice) {
-            case 1:
-                Map<String, Long> countCity = contactsArrayList.stream()
-                        .collect(Collectors.groupingBy(e -> e.getCity(), Collectors.counting()));
-                System.out.println(countCity + "\n");
-                break;
-            case 2:
-                Map<String, Long> countState = contactsArrayList.stream()
-                        .collect(Collectors.groupingBy(e -> e.getState(), Collectors.counting()));
-                System.out.println(countState + "\n");
-                break;
-            case 3:
-                return;
-            default:
-                System.out.println("Invalid Option");
-        }
     }
 }
